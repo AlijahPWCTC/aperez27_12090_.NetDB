@@ -118,9 +118,19 @@ namespace A11___Convert_Application_to_use_Database
         }
         public static void DeleteMovie(){
             using (var db = new MovieContext()){
-                Console.WriteLine($"Please enter the movie id you would like to delete from 1 to {db.Movies.Count()}: ");
-                long id = long.Parse(Console.ReadLine());
-                Movie movie = db.Movies.Find(id);         
+                Console.WriteLine($"Please enter the name of the movie you would like to search for: ");
+                string title = Console.ReadLine();
+                List<Movie> movies = db.Movies.ToList();
+                List<Movie> moviesToDelete = new List<Movie>();
+                foreach(Movie MOVIE in movies){
+                    if(MOVIE.Title.ToLower().Contains(title.ToLower())){
+                        moviesToDelete.Add(MOVIE);
+                        Console.WriteLine($"{MOVIE.Title}");
+                    }
+                }
+                Console.WriteLine($"Please enter the number of the movie you would like to delete from 1 to {moviesToDelete.Count()}: ");
+                int movieToDelete = int.Parse(Console.ReadLine());
+                Movie movie = moviesToDelete[movieToDelete-1];
                 IEnumerable<MovieGenre> removeMovieGenres =
                     from m in db.MovieGenres
                     where m.Movie == movie
@@ -148,9 +158,19 @@ namespace A11___Convert_Application_to_use_Database
         }
         public static void UpdateMovie(){
             using (var db = new MovieContext()){
-                Console.WriteLine($"Please enter the movie id you would like to update from 1 to {db.Movies.Count()}: ");
-                long id = long.Parse(Console.ReadLine());
-                Movie movie = db.Movies.Find(id);
+                Console.WriteLine($"Please enter the name of the movie you would like to search for: ");
+                string title = Console.ReadLine();
+                List<Movie> movies = db.Movies.ToList();
+                List<Movie> moviesToDelete = new List<Movie>();
+                foreach(Movie MOVIE in movies){
+                    if(MOVIE.Title.ToLower().Contains(title.ToLower())){
+                        moviesToDelete.Add(MOVIE);
+                        Console.WriteLine($"{MOVIE.Title}");
+                    }
+                }
+                Console.WriteLine($"Please enter the number of the movie you would like to update from 1 to {moviesToDelete.Count()}: ");
+                int movieToDelete = int.Parse(Console.ReadLine());
+                Movie movie = moviesToDelete[movieToDelete-1];
                 IEnumerable<UserMovie> updateUserMovies =
                     from um in db.UserMovies
                     where um.Movie == movie
